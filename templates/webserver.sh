@@ -8,11 +8,7 @@ apt-get update
 # Install packages
 apt-get install -y unzip dnsmasq vim
 
-curl \
-  --silent \
-  --location \
-  --output ${service_name}.zip \
-  ${standalone_binary_url}
+wget ${standalone_binary_url}
 
 unzip ${service_name}.zip
 mv ${service_name} /usr/local/bin/${service_name}
