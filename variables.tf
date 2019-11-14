@@ -15,7 +15,7 @@ variable "service_port" {
     default = 8080
 }
 
-variable "binary_url" {
+variable "release_url" {
 }
 
 variable "vpc_id" {

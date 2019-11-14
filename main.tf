@@ -3,7 +3,7 @@ provider "aws" {
   region = var.aws_region
 }
 
-data "aws_ami" "gateway_ami" {
+data "aws_ami" "ubuntu" {
   most_recent = true
 
   filter {
@@ -30,7 +30,7 @@ EOF
     hostname = "${var.service_name}-${count.index+1}"
     service_name = var.service_name
     service_port = var.service_port
-    standalone_binary_url = var.binary_url
+    standalone_binary_url = var.release_url
   }
 }
 
@@ -110,7 +110,7 @@ resource "aws_instance" "web" {
 
   # Lookup the correct AMI based on the region
   # we specified
-  ami = "${data.aws_ami.gateway_ami.image_id}"
+  ami = "${data.aws_ami.ubuntu.image_id}"
 
   # The name of our SSH keypair we created above.
   key_name = var.key_name
@@ -122,8 +122,8 @@ resource "aws_instance" "web" {
   # environment it's more common to have a separate private subnet for
   # backend instances.
   subnet_id = var.subnet_id
-  
-  user_data = "${data.template_file.standalone_binary_web_server_user_data.*.rendered}"
+
+  user_data = "${element(data.template_file.standalone_binary_web_server_user_data.*.rendered, count.index)}"
 
   tags = {
       "Name" = "${var.service_name}-${count.index+1}"
