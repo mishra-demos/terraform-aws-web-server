@@ -30,7 +30,7 @@ EOF
     hostname = "${var.service_name}-${count.index+1}"
     service_name = var.service_name
     service_port = var.service_port
-    standalone_binary_url = var.binary_url
+    standalone_binary_url = var.release_url
   }
 }
 
