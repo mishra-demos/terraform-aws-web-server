@@ -94,7 +94,7 @@ resource "aws_elb" "web" {
 
   subnets         = [var.subnet_id]
   security_groups = ["${aws_security_group.elb.id}"]
-  instances       = ["${aws_instance.web.*.id}"]
+  instances       = aws_instance.web[*].id
 
   listener {
     instance_port     = var.service_port
