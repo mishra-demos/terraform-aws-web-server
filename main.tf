@@ -36,7 +36,7 @@ EOF
 
 # A security group for the ELB so it is accessible via the web
 resource "aws_security_group" "elb" {
-  name        = "terraform_example_elb"
+  name        = "${var.service_name}-public-lb"
   description = "Used in the terraform"
   vpc_id      = var.vpc_id
 
