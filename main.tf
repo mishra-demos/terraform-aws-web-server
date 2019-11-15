@@ -36,7 +36,7 @@ EOF
 
 # A security group for the ELB so it is accessible via the web
 resource "aws_security_group" "elb" {
-  name        = "${var.service_name}-public-lb"
+  name        = "${var.service_name}-public-elb"
   description = "Used in the terraform"
   vpc_id      = var.vpc_id
 
@@ -90,7 +90,7 @@ resource "aws_security_group" "default" {
 }
 
 resource "aws_elb" "web" {
-  name = "terraform-example-elb"
+  name = "${var.service_name}-public-elb"
 
   subnets         = [var.subnet_id]
   security_groups = ["${aws_security_group.elb.id}"]
@@ -104,7 +104,7 @@ resource "aws_elb" "web" {
   }
 
   health_check {
-    healthy_threshold   = 2
+    healthy_threshold   = 10
     unhealthy_threshold = 2
     timeout             = 3
     target              = "HTTP:${var.service_port}/"
