@@ -106,7 +106,7 @@ resource "aws_elb" "web" {
   health_check {
     healthy_threshold   = 10
     unhealthy_threshold = 2
-    timeout             = 3
+    timeout             = 10
     target              = "HTTP:${var.service_port}/"
     interval            = 10
   }
