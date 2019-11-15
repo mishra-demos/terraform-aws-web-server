@@ -31,6 +31,7 @@ EOF
     service_name = var.service_name
     service_port = var.service_port
     standalone_binary_url = var.release_url
+    inventory_service_addr = var.inventory_service_addr
   }
 }
 
@@ -106,9 +107,9 @@ resource "aws_elb" "web" {
   health_check {
     healthy_threshold   = 10
     unhealthy_threshold = 2
-    timeout             = 3
+    timeout             = 10
     target              = "HTTP:${var.service_port}/"
-    interval            = 10
+    interval            = 15
   }
 }
 

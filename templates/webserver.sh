@@ -22,6 +22,7 @@ After=network-online.target
 
 [Service]
 Environment=PORT=${service_port}
+Environment=INVENTORY_SERVICE_ADDR=${inventory_service_addr}
 ExecStart=/usr/local/bin/${service_name}
 ExecReload=/bin/kill -HUP $MAINPID
 KillSignal=SIGINT
@@ -45,4 +46,5 @@ sudo tee -a /etc/hosts > /dev/null <<EOF
 $IP_ADDRESS  ${hostname}
 EOF
 
+systemctl daemon-reload
 systemctl start ${service_name}
